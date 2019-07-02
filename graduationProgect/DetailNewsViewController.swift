@@ -45,7 +45,7 @@ class DetailNewsViewController: UIViewController {
             switch failure {
             case "noResult": self.showAlert(title: "error", message: "noResult")
             case "noResponse": self.showAlert(title: "error", message: "noResponse")
-            default:
+        default:
                 self.showAlert(title: "error", message: "default")
             }
         }

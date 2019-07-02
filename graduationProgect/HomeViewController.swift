@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var alamofire = ModelHome()
-    var itemImage: [Home] = []
+    var massImage: [Home] = []
     var detailsImage = DetailViewController()
     var url: String?
 
@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
         alamofire.getImageHome(url: URL(string: "http://realstate.diitcenter.ru/api/v1/housing/list")!, success: { (result) in
             for itemsImage in result {
                 let imageItem = Home(imageHome: itemsImage["img_preview"] as! String, labelHome: itemsImage["name"] as! String, url: itemsImage["url"] as! String)
-                self.itemImage.append(imageItem)
+                self.massImage.append(imageItem)
             }
             self.collectionView.reloadData()
         }) { (failure) in
@@ -56,14 +56,14 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemImage.count
+        return massImage.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InterestCell", for: indexPath ) as? HomeCVCell else {fatalError("error")}
-        cell.mainImage.sd_setImage(with: URL(string: ("\(itemImage[indexPath.row].imageHome)")), completed: nil)
-        cell.homeLabel.text = itemImage[indexPath.row].labelHome
+        cell.mainImage.sd_setImage(with: URL(string: ("\(massImage[indexPath.row].imageHome)")), completed: nil)
+        cell.homeLabel.text = massImage[indexPath.row].labelHome
         return cell
     }
     
@@ -77,7 +77,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.url = itemImage[indexPath.row].url
+        self.url = massImage[indexPath.row].url
         performSegue(withIdentifier: "segueInDetails", sender: nil)
     }
     
